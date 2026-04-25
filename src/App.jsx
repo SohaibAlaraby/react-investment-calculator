@@ -16,18 +16,11 @@ function App() {
   const investmentKeyInfo = Object.keys(initialInvestmentObj);
 
   const [userInvestment,setUserInvestment] = useState(initialInvestmentObj);
-  const [whosNegative, setWhosNegative] = useState(new Set());
   function handleInputChange(key, value){
-    value = Number(value);
+    value = Number(value) || 0;
     if(value < 0) {
-      setWhosNegative((prevNegatives) => new Set(prevNegatives.add(key)) );
       return;  
     }
-    setWhosNegative((prevNegatives) => {
-      let curNegatives = new Set(prevNegatives);
-      curNegatives.delete(key);
-      return curNegatives;
-    });
     setUserInvestment((prevInvestment) => {
       return ({
         ...prevInvestment,
@@ -35,25 +28,23 @@ function App() {
       });
     });
   }
-  console.log(userInvestment);
   return (
     <>
     <section id="user-input" className="input-container">
       <InputGroup >
-        <Input getUserInput={handleInputChange} id={investmentKeyInfo[0]} defaultValue={initialInvestmentObj[investmentKeyInfo[0]]} title="initial investment" negativeList={whosNegative}/>
-        <Input getUserInput={handleInputChange} id={investmentKeyInfo[1]} defaultValue={initialInvestmentObj[investmentKeyInfo[1]]} title="annual investment" negativeList={whosNegative}/>
+        <Input getUserInput={handleInputChange} id={investmentKeyInfo[0]} value={userInvestment[investmentKeyInfo[0]]} title="initial investment"/>
+        <Input getUserInput={handleInputChange} id={investmentKeyInfo[1]} value={userInvestment[investmentKeyInfo[1]]} title="annual investment"/>
       </InputGroup>
       
       <InputGroup >
-        <Input getUserInput={handleInputChange} id={investmentKeyInfo[2]} defaultValue={initialInvestmentObj[investmentKeyInfo[2]]} title="expected return" negativeList={whosNegative}/>
-        <Input getUserInput={handleInputChange} id={investmentKeyInfo[3]} defaultValue={initialInvestmentObj[investmentKeyInfo[3]]} title="duration" negativeList={whosNegative}/>
+        <Input getUserInput={handleInputChange} id={investmentKeyInfo[2]} value={userInvestment[investmentKeyInfo[2]]} title="expected return"/>
+        <Input getUserInput={handleInputChange} id={investmentKeyInfo[3]} value={userInvestment[investmentKeyInfo[3]]} title="duration"/>
       </InputGroup>
     </section>
-    {(whosNegative.size === 0) && <table id="result">
+    <table id="result">
       <TableHeader content={tableTitles}/>
       <TableBody investmentInfo={userInvestment}/>
-    </table>}
-    {(whosNegative.size > 0) && <p className="center">No logs availabe</p>}
+    </table>
 
     </>
     

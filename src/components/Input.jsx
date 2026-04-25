@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Input({id,title,defaultValue,type = "number",getUserInput,negativeList}) {
+export default function Input({id,title,value,type = "number",getUserInput}) {
     
     return (
         <div >
@@ -8,10 +8,9 @@ export default function Input({id,title,defaultValue,type = "number",getUserInpu
             <input 
                 type={type} 
                 id={id} 
-                defaultValue={defaultValue}
+                value={value}
                 onChange={(event)=> getUserInput(id,event.target.value)} 
                 required/>
-            {negativeList.has(id) && <p className="error">negative number is not allowed</p>}
         </div>
     );
 }
