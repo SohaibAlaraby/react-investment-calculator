@@ -79,6 +79,7 @@ body {
 
 #result thead {
   font-size: 0.7rem;
+  text-transform: capitalize;
   color: #83e6c0;
 }
 
@@ -90,4 +91,9 @@ body {
 
 .center {
   text-align: center;
+}
+.error {
+  font-size: 0.7rem;
+  color: #ff6b6b;
+  font-weight: bold;
 }
